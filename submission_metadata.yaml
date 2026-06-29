@@ -18,9 +18,9 @@ team_members:
 # ============================================================================
 # Code and reproducibility
 # ============================================================================
-github_repo: "https://github.com/YOUR_USERNAME/rankiq"  # ← fill after creating repo
+github_repo: "https://github.com/Qiaoyici/rankiq"
 
-sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/rankiq-demo"  # ← fill after deploying
+sandbox_link: "https://huggingface.co/spaces/Qiaoyici/rankiq-demo"
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 
@@ -36,7 +36,7 @@ compute:
   uses_gpu_for_inference: false
   has_network_during_ranking: false
   pre_computation_required: true
-  pre_computation_time_minutes: 0  # ← update once Phase 1 finishes
+  pre_computation_time_minutes: 31
 
 # ============================================================================
 # AI tools declaration
