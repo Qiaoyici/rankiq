@@ -298,8 +298,8 @@ def process_candidates(candidates_json, jd_text):
         if has_research and not has_production:
             failure_penalties += 0.4
             
-        has_wrong_domain = any(kw in desc_text for w in WRONG_DOMAIN_KEYWORDS)
-        has_right_domain = any(kw in desc_text for w in RIGHT_DOMAIN_KEYWORDS)
+        has_wrong_domain = any(w in desc_text for w in WRONG_DOMAIN_KEYWORDS)
+        has_right_domain = any(w in desc_text for w in RIGHT_DOMAIN_KEYWORDS)
         if has_wrong_domain and not has_right_domain:
             failure_penalties += 0.3
             
