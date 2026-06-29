@@ -213,13 +213,15 @@ def main():
                 yoe_mismatch = True
                 
         skills_overload = False
-        uncorroborated_count = 0
-        for s in skills:
-            if s['proficiency'] in ['expert', 'advanced'] and s['endorsements'] == 0 and s['duration_months'] == 0:
-                if not is_mentioned(s['name'], desc_text + " " + (profile['summary'] or "") + " " + (profile['headline'] or "")):
-                    uncorroborated_count += 1
-        if uncorroborated_count > 8:
-            skills_overload = True
+        expert_adv_skills = [s for s in skills if s['proficiency'] in ['expert', 'advanced']]
+        if len(expert_adv_skills) > 8:
+            unendorsed_unduration_uncorroborated_count = 0
+            for s in expert_adv_skills:
+                if s['endorsements'] <= 2 and s['duration_months'] <= 36:
+                    if not is_mentioned(s['name'], desc_text + " " + (profile['summary'] or "") + " " + (profile['headline'] or "")):
+                        unendorsed_unduration_uncorroborated_count += 1
+            if unendorsed_unduration_uncorroborated_count > 5:
+                skills_overload = True
             
         title_unrelated = False
         
