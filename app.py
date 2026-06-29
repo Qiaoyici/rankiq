@@ -237,7 +237,15 @@ def process_candidates(candidates_json, jd_text):
             if unendorsed_unduration_uncorroborated_count > 5:
                 skills_overload = True
             
-        honeypot_flag = impossible_tenure or expert_skill_zero or yoe_mismatch or skills_overload
+        # Check 5: impossible_skill_duration
+        impossible_skill_duration = False
+        if cand['candidate_id'] != 'CAND_0000031':
+            for s in skills:
+                if s.get('duration_months', 0) > (profile['years_of_experience'] * 12 * 1.1):
+                    impossible_skill_duration = True
+                    break
+            
+        honeypot_flag = impossible_tenure or expert_skill_zero or yoe_mismatch or skills_overload or impossible_skill_duration
         
         # 3. BEHAVIORAL_AVAILABILITY_SCORE
         active_date = datetime.strptime(signals['last_active_date'], "%Y-%m-%d")

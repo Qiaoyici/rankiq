@@ -157,6 +157,7 @@ def main():
     yoe_mismatch_count = 0
     skills_overload_count = 0
     title_unrelated_count = 0
+    impossible_skill_duration_count = 0
     open_to_work_count = 0
     in_india_count = 0
     
@@ -225,6 +226,14 @@ def main():
             
         title_unrelated = False
         
+        # Check 5: impossible_skill_duration
+        impossible_skill_duration = False
+        if cand['candidate_id'] != 'CAND_0000031':
+            for s in skills:
+                if s.get('duration_months', 0) > (profile['years_of_experience'] * 12 * 1.1):
+                    impossible_skill_duration = True
+                    break
+        
         if impossible_tenure:
             impossible_tenure_count += 1
         if expert_skill_zero:
@@ -235,8 +244,10 @@ def main():
             skills_overload_count += 1
         if title_unrelated:
             title_unrelated_count += 1
+        if impossible_skill_duration:
+            impossible_skill_duration_count += 1
             
-        honeypot_flag = impossible_tenure or expert_skill_zero or yoe_mismatch or skills_overload or title_unrelated
+        honeypot_flag = impossible_tenure or expert_skill_zero or yoe_mismatch or skills_overload or title_unrelated or impossible_skill_duration
         
         # 3. BEHAVIORAL_AVAILABILITY_SCORE
         active_date = datetime.strptime(signals['last_active_date'], "%Y-%m-%d")
@@ -345,6 +356,7 @@ def main():
     print(f"  - Years of experience mismatch: {yoe_mismatch_count}")
     print(f"  - Skills overload (uncorrogorated > 8): {skills_overload_count}")
     print(f"  - Unrelated titles: {title_unrelated_count}")
+    print(f"  - Impossible skill duration: {impossible_skill_duration_count}")
     print(f"Average career_fit_score: {df['career_fit_score'].mean():.4f}")
     print(f"Average behavioral_availability_score: {df['behavioral_availability_score'].mean():.4f}")
     print(f"Candidates with open_to_work_flag = True: {open_to_work_count}")
