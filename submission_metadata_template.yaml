@@ -1,0 +1,91 @@
+# Redrob Hackathon — Submission Metadata Template
+
+# ============================================================================
+# Team identity
+# ============================================================================
+team_name: "YOUR_TEAM_ID_HERE"  # ← paste exact Team ID from INDIA RUNS dashboard
+
+primary_contact:
+  name: "Joycee Pakerla"
+  email: "rathanemmy2005@gmail.com"
+  phone: "+91-XXXXXXXXXX"  # ← your number
+
+team_members:
+  - name: "Joycee Pakerla"
+    email: "rathanemmy2005@gmail.com"
+    role: "Solo Participant — ML Engineer & System Architect"
+
+# ============================================================================
+# Code and reproducibility
+# ============================================================================
+github_repo: "https://github.com/YOUR_USERNAME/rankiq"  # ← fill after creating repo
+
+sandbox_link: "https://huggingface.co/spaces/YOUR_USERNAME/rankiq-demo"  # ← fill after deploying
+
+reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
+
+# ============================================================================
+# Compute environment
+# ============================================================================
+compute:
+  platform: "HP Laptop — Intel Core Ultra 7 255H"
+  cpu_cores: 16
+  ram_gb: 24
+  python_version: "3.12.10"
+  os: "Windows 11"
+  uses_gpu_for_inference: false
+  has_network_during_ranking: false
+  pre_computation_required: true
+  pre_computation_time_minutes: 0  # ← update once Phase 1 finishes
+
+# ============================================================================
+# AI tools declaration
+# ============================================================================
+ai_tools_used:
+  - "Claude"
+  - "Gemini"
+  - "Other"  # Antigravity IDE
+
+ai_usage_summary: |
+  Used Claude (Anthropic) for system architecture design, scoring formula
+  development, feature engineering decisions, and methodology review.
+  Used Antigravity IDE (Google's agentic coding tool) as the primary code
+  implementation environment — it generated and iteratively refined all
+  Python files under human direction and review.
+  Used Gemini for presentation deck generation.
+  No candidate data was fed to any external LLM at any point.
+  All ranking runs fully offline on CPU with zero API calls during ranking.
+  The human author directed all architectural decisions, reviewed all
+  generated code, and is fully able to defend every design choice.
+
+# ============================================================================
+# Approach summary
+# ============================================================================
+methodology_summary: |
+  RankIQ is a two-phase actuarial candidate ranking pipeline. Phase 1
+  (offline, run once) precomputes five feature scores per candidate:
+  (1) Career Fit Score via sentence-transformer embeddings comparing career
+  narratives against JD intent — not keywords; (2) Honeypot Flag using
+  rule-based timeline validation and skill-corroboration checks across
+  all 100K candidates; (3) Behavioral Availability Score from a weighted
+  combination of all 23 Redrob platform signals prioritizing recency,
+  responsiveness, and verified identity; (4) Failure Mode Score penalizing
+  JD-explicit anti-patterns including title-chasing, framework-only
+  experience, pure consulting backgrounds, and wrong domain expertise;
+  (5) Hire Risk Score — a FAIR-methodology-inspired actuarial model
+  estimating expected financial loss from a mis-hire in INR lakhs.
+  Phase 2 (rank.py, under 2 minutes on CPU) loads precomputed features,
+  applies a weighted scoring formula, zeros out honeypot candidates, and
+  generates candidate-specific reasoning strings referencing concrete
+  profile facts. Final output is a validated submission CSV with 100
+  ranked candidates.
+
+# ============================================================================
+# Declarations
+# ============================================================================
+declarations:
+  read_submission_spec: true
+  code_is_original_work: true
+  no_collusion: true
+  honeypot_check_done: true
+  reproduction_tested: true
