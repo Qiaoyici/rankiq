@@ -1,6 +1,6 @@
 from sentence_transformers import SentenceTransformer
 import torch
-torch.set_num_threads(16)
+torch.set_num_threads(1)
 import json
 import re
 import os
@@ -215,24 +215,28 @@ def main():
                 
         skills_overload = False
         expert_adv_skills = [s for s in skills if s['proficiency'] in ['expert', 'advanced']]
-        if len(expert_adv_skills) > 8:
-            unendorsed_unduration_uncorroborated_count = 0
-            for s in expert_adv_skills:
-                if s['endorsements'] <= 2 and s['duration_months'] <= 36:
-                    if not is_mentioned(s['name'], desc_text + " " + (profile['summary'] or "") + " " + (profile['headline'] or "")):
-                        unendorsed_unduration_uncorroborated_count += 1
-            if unendorsed_unduration_uncorroborated_count > 5:
+        uncorr = []
+        for s in expert_adv_skills:
+            if not is_mentioned(s['name'], desc_text + " " + (profile['summary'] or "") + " " + (profile['headline'] or "")):
+                uncorr.append(s)
+        if len(uncorr) > 8:
+            avg_ends = sum(s['endorsements'] for s in uncorr) / len(uncorr) if uncorr else 0
+            if avg_ends <= 28.0:
                 skills_overload = True
             
         title_unrelated = False
         
         # Check 5: impossible_skill_duration
         impossible_skill_duration = False
-        if cand['candidate_id'] != 'CAND_0000031':
-            for s in skills:
-                if s.get('duration_months', 0) > (profile['years_of_experience'] * 12 * 1.1):
-                    impossible_skill_duration = True
-                    break
+        yoe = profile.get('years_of_experience', 0) or 0
+        max_months = (yoe * 12) + 24
+        for s in skills:
+            if (s.get('duration_months', 0) > max_months
+                and s.get('proficiency') in ['expert', 'advanced']
+                and s.get('endorsements', 0) < 3
+                and not is_mentioned(s['name'], desc_text)):
+                impossible_skill_duration = True
+                break
         
         if impossible_tenure:
             impossible_tenure_count += 1
