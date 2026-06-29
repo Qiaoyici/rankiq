@@ -28,13 +28,13 @@ The offline feature extraction on `candidates.jsonl` produced the following metr
 | Metric | Value |
 | :--- | :--- |
 | **Total Candidates Processed** | 100,000 |
-| **Total Honeypots Flagged** | 15,512 |
+| **Total Honeypots Flagged** | 401 |
 | &nbsp;&nbsp;&nbsp;&nbsp;*- Impossible Tenure (Krutrim/Sarvam AI < 2023)* | 73 |
 | &nbsp;&nbsp;&nbsp;&nbsp;*- Expert Skill Zero Endorsements/Duration* | 15 |
 | &nbsp;&nbsp;&nbsp;&nbsp;*- Years of Experience Mismatch* | 49 |
-| &nbsp;&nbsp;&nbsp;&nbsp;*- Skills Overload (Uncorroborated > 8, Low Endorsement/Duration)* | 97 |
+| &nbsp;&nbsp;&nbsp;&nbsp;*- Skills Overload (Uncorroborated > 8, Average Endorsements <= 28.0)* | 101 |
 | &nbsp;&nbsp;&nbsp;&nbsp;*- Unrelated Titles* | 0 |
-| &nbsp;&nbsp;&nbsp;&nbsp;*- Impossible Skill Duration (Skill Duration > YoE * 1.1)* | 15,311 |
+| &nbsp;&nbsp;&nbsp;&nbsp;*- Impossible Skill Duration (Stricter Pre-Career Tol.)* | 171 |
 | **Average Career Fit Score** | 0.4564 |
 | **Average Behavioral Availability Score** | 0.5084 |
 | **Candidates Open to Work** | 35,339 |
