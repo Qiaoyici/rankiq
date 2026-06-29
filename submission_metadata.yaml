@@ -20,7 +20,7 @@ team_members:
 # ============================================================================
 github_repo: "https://github.com/Qiaoyici/rankiq"
 
-sandbox_link: "https://huggingface.co/spaces/Qiaoyici/rankiq-demo"
+sandbox_link: "https://huggingface.co/spaces/qiaomin/rankiq-demo"
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 
