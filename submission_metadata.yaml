@@ -8,7 +8,7 @@ team_name: "YOUR_TEAM_ID_HERE"  # ← paste exact Team ID from INDIA RUNS dashbo
 primary_contact:
   name: "Joycee Pakerla"
   email: "rathanemmy2005@gmail.com"
-  phone: "+91-XXXXXXXXXX"  # ← your number
+  phone: "+91-9493289065"  # ← your number
 
 team_members:
   - name: "Joycee Pakerla"
@@ -18,9 +18,9 @@ team_members:
 # ============================================================================
 # Code and reproducibility
 # ============================================================================
-github_repo: "https://github.com/Qiaoyici/rankiq"
+github_repo: "https://github.com/Qiaoyici/rankiq"  # ← fill after creating repo
 
-sandbox_link: "https://huggingface.co/spaces/qiaomin/rankiq-demo"
+sandbox_link: "https://huggingface.co/spaces/qiaomin/rankiq-demo"  # ← fill after deploying
 
 reproduce_command: "python rank.py --candidates ./candidates.jsonl --out ./submission.csv"
 
@@ -36,7 +36,7 @@ compute:
   uses_gpu_for_inference: false
   has_network_during_ranking: false
   pre_computation_required: true
-  pre_computation_time_minutes: 31
+  pre_computation_time_minutes: 0  # ← update once Phase 1 finishes
 
 # ============================================================================
 # AI tools declaration

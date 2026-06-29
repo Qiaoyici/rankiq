@@ -186,8 +186,8 @@ def process_candidates(candidates_json, jd_text):
         
         # 1. CAREER_FIT_SCORE
         sim = float(similarities[idx])
-        companies = {job['company'].lower() for job in history}
-        is_product_only = not (companies & CONSULTING_COMPANIES)
+        has_consulting = any(any(c in job['company'].lower() for c in {'wipro', 'tcs', 'infosys', 'accenture', 'cognizant', 'capgemini'}) for job in history)
+        is_product_only = not has_consulting
         boost = 0.10 if is_product_only else 0.0
         
         desc_text = " ".join([job['description'] or "" for job in history]).lower()
@@ -229,7 +229,7 @@ def process_candidates(candidates_json, jd_text):
         skills_overload = False
         uncorroborated_count = 0
         for s in skills:
-            if s['proficiency'] in ['expert', 'advanced']:
+            if s['proficiency'] in ['expert', 'advanced'] and s['endorsements'] == 0 and s['duration_months'] == 0:
                 if not is_mentioned(s['name'], desc_text + " " + (profile['summary'] or "") + " " + (profile['headline'] or "")):
                     uncorroborated_count += 1
         if uncorroborated_count > 8:
@@ -291,8 +291,7 @@ def process_candidates(candidates_json, jd_text):
         if has_framework and not has_pre_llm:
             failure_penalties += 0.4
             
-        is_pure_services = all(any(c in job['company'].lower() for c in CONSULTING_COMPANIES) for job in history)
-        if is_pure_services:
+        if has_consulting:
             failure_penalties += 0.5
             
         if has_research and not has_production:

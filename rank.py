@@ -37,9 +37,9 @@ def generate_reasoning(rank, row, profile, history, skills, signals):
     desc_text = " ".join([job['description'] or "" for job in history]).lower()
     
     if row['failure_mode_score'] < 1.0:
-        is_pure_services = all(any(c in job['company'].lower() for c in ['tcs', 'wipro', 'infosys', 'accenture', 'cognizant', 'capgemini', 'mindtree']) for job in history)
-        if is_pure_services:
-            gaps.append("services-only consulting background")
+        has_consulting = any(any(c in job['company'].lower() for c in ['wipro', 'tcs', 'infosys', 'accenture', 'cognizant', 'capgemini']) for job in history)
+        if has_consulting:
+            gaps.append("consulting background")
         has_research = any(w in desc_text for w in RESEARCH_KEYWORDS)
         production_words = {'production', 'deploy', 'ship', 'user', 'scale', 'system'}
         has_prod = any(w in desc_text for w in production_words)
